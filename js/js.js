@@ -6,22 +6,37 @@ $('#dtVerticalScrollExample').DataTable({
 $('.dataTables_length').addClass('bs-select');
 });
 
-let t = document.getElementById("dtVerticalScrollExample");
-let trs = t.getElementsByTagName("td");
-for (let j = 0; j < trs.length; j++) {
+function addID() {
+    let t = document.getElementById("dtVerticalScrollExample");
+    let trs = t.getElementsByTagName("td");
+    for (let j = 0; j < trs.length; j++) {
         trs[j].id = "td"+Math.floor(j/5)+(j%5);
+    }
 }
 
+function addRow(rowNum){
+    var tbody = document.getElementsByTagName("TBODY")[0];
+    for (var i = 0; i < rowNum; i++) {
+        var row = document.createElement("TR");
+        tbody.appendChild(row);
+            for (var j = 0; j < 5; j++) {
+                let newTd = document.createElement('td');
+                row.appendChild(newTd);
+        }
+       
+    }
+    
+}
 
-function quest() {
-
+function request() {
 $.getJSON("https://old.bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json", function(data) {
-  for (let i = 0; i<61; i++) {
+  
+  for (let i = 0; i<data.length; i++) {
       for (let k = 0; k<5; k++) {
         let res = "#td"+i+k;
         let num = "№"+i+k;  
           switch (k) {
-              case 0: $(res).html(data[i].r030);
+              case 0: $(res).html(i+k);
                 break;
               case 1: $(res).html(data[i].txt);
                 break;
@@ -41,4 +56,6 @@ $.getJSON("https://old.bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json
    
 }
 
-quest();
+addRow(61);
+addID();
+request();
