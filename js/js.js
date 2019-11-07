@@ -30,7 +30,8 @@ function addRow(rowNum){
 
 function request() {
 $.getJSON("https://old.bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json", function(data) {
-  
+  addRow(data.length);
+  addID();
   for (let i = 0; i<data.length; i++) {
       for (let k = 0; k<5; k++) {
         let res = "#td"+i+k;
@@ -56,6 +57,5 @@ $.getJSON("https://old.bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json
    
 }
 
-addRow(61);
-addID();
+
 request();
